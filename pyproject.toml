@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "myproject"
+version = "0.1.0"
+dependencies = []
+
+[tool.ruff]
+exclude = [
+    ".venv",
+    ".vscode",
+    ".git",
+]
+indent-width = 4
+line-length = 79
+preview = true
+target-version = "py313"
+
+[tool.ruff.format]
+docstring-code-format = true
+indent-style = "space"
+preview = true
+quote-style = "double"
+skip-magic-trailing-comma = true
+line-ending = "auto"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+    "COM", # flake8-commas
+]
+ignore = [
+    "E501",  # line too long
+    "E902",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["myproject"]
+split-on-trailing-comma = false 
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+disallow_any_generics = true
+check_untyped_defs = true
+no_implicit_reexport = true
+disallow_incomplete_defs = true
+exclude = '''\\.venv|\\.vscode|\\.git|__pycache__'''
