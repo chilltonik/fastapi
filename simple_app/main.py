@@ -3,8 +3,9 @@ from pathlib import Path
 from typing import Any, TextIO
 
 import uvicorn
-from fastapi import FastAPI, HTTPException
 from models import NewBook
+
+from fastapi import FastAPI, HTTPException
 
 app: FastAPI = FastAPI()
 
