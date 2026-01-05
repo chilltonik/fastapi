@@ -1,4 +1,4 @@
-from collections.abc import AsyncGenerator, Sequence
+from collections.abc import AsyncGenerator
 from typing import Annotated, Any
 
 import uvicorn
@@ -97,7 +97,7 @@ async def add_book(book: BookAddSchema, session: SessionDep) -> dict[str, Any]:
 
 
 @app.get("/books", tags=["books"])
-async def get_books(session: SessionDep) -> Any:
+async def get_books(session: SessionDep):  # type: ignore[no-untyped-def]
     """
     Docstring for get_books
 
