@@ -24,6 +24,9 @@
 /docker/*
 *.csv
 
+# db
+*.db
+
 # logs
 /logs
 /log_*
