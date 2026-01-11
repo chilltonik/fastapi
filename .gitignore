@@ -24,6 +24,12 @@
 /docker/*
 *.csv
 
+# video
+*.mp4
+
+# audio
+*.mp3
+
 # db
 *.db
 
