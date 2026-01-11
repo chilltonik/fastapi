@@ -1,9 +1,9 @@
 from collections.abc import Generator
-from typing import Any, BinaryIO, TextIO
+from typing import Any
 
 import uvicorn
 
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, UploadFile
 from fastapi.responses import FileResponse, StreamingResponse
 
 app: FastAPI = FastAPI()
