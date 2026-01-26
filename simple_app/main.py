@@ -61,6 +61,6 @@ def add_book(book: NewBook) -> dict[str, Any]:
     return {"success": True, "message": "New book successfully added"}
 
 
-# python main.py
+# python3 main.py
 if __name__ == "__main__":
     uvicorn.run("main:app", reload=True)
