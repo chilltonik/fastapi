@@ -1,0 +1,5 @@
+docker build -t docker_app
+
+docker run --name=docker_app -p 1252:8000 docker_app
+
+docker exec -it docker_app bash
