@@ -58,4 +58,4 @@ disallow_any_generics = true
 check_untyped_defs = true
 no_implicit_reexport = true
 disallow_incomplete_defs = true
-exclude = '''\\.venv|\\.vscode|\\.git|__pycache__'''
+exclude = '''\\.venv|\\.vscode|\\.git|__pycache__|depens_app|middleware_app'''
