@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Books front</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: #f4f4f5;
+      color: #111;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    main {
+      width: min(640px, 90vw);
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      letter-spacing: -0.02em;
+    }
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 0.55rem 1.4rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
+      cursor: pointer;
+    }
+    button:disabled {
+      opacity: 0.4;
+      cursor: wait;
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    li {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .book-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .size {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+    .status {
+      font-size: 0.85rem;
+      color: #111;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>Books</h1>
+        <p class="status" id="status">Загрузка...</p>
+      </div>
+      <button id="reload">Обновить</button>
+    </header>
+    <ul id="books-list" aria-live="polite"></ul>
+  </main>
+  <script>
+    const endpoint =
+      location.origin && location.origin !== "null"
+        ? `${location.origin}/books`
+        : "http://127.0.0.1:8000/books";
+    const booksList = document.getElementById("books-list");
+    const statusEl = document.getElementById("status");
+    const reloadButton = document.getElementById("reload");
+
+    async function renderBooks() {
+      reloadButton.disabled = true;
+      statusEl.textContent = "Загрузка...";
+      try {
+        const response = await fetch(endpoint);
+        if (!response.ok) {
+          throw new Error(`${response.status} ${response.statusText}`);
+        }
+        const data = await response.json();
+        const books = Object.values(data);
+        booksList.innerHTML = books.length
+          ? books
+              .map(
+                (book) => `
+                  <li>
+                    <div class="book-meta">
+                      <strong>${book.name}</strong>
+                      <span>ID: ${book.id}</span>
+                    </div>
+                    <span class="size">${book.size}</span>
+                  </li>`
+              )
+              .join("")
+          : "<li>Книг пока нет</li>";
+        statusEl.textContent = `Всего: ${books.length} ${books.length === 1 ? "книга" : "книг"}`;
+      } catch (error) {
+        booksList.innerHTML = "<li>Не удалось загрузить книги.</li>";
+        statusEl.textContent = `Ошибка: ${error.message}`;
+      } finally {
+        reloadButton.disabled = false;
+      }
+    }
+
+    reloadButton.addEventListener("click", renderBooks);
+    renderBooks();
+  </script>
+</body>
+</html>
